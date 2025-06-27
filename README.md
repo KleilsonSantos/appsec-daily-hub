@@ -26,7 +26,11 @@ Central de notícias diárias, vulnerabilidades, ferramentas OWASP e tutoriais s
 
 ## ⭐ Favoritos de Kleilson Santos
 - [GitHub - infra-devtools](https://github.com/KleilsonSantos/infra-devtools)
+<<<<<<< Updated upstream
 - [Feed personalizado Notion & RSS](#)
+=======
+- [Feed personalizado Notion & RSS](https://www.notion.so/AppSec-Daily-Hub-20ea149fe7e080c5991ce66fda5b936f)
+>>>>>>> Stashed changes
 
 ---
 
