@@ -1,6 +1,6 @@
 {
   "name": "appsec-daily-hub",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "🛡️ AppSec Daily Hub - Central de Segurança de Software",
   "keywords": [
     "AppSec",
@@ -11,7 +11,6 @@
     "exploits",
     "security"
   ],
-  "description": "Central de notícias diárias, vulnerabilidades críticas, ferramentas OWASP e tutoriais técnicos sobre segurança de software.",
   "homepage": "https://github.com/KleilsonSantos/appsec-daily-hub#readme",
   "bugs": {
     "url": "https://github.com/KleilsonSantos/appsec-daily-hub/issues"
