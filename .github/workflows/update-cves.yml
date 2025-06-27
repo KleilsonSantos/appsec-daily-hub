@@ -1,0 +1,52 @@
+name: Update CVE List
+
+on:
+  schedule:
+    - cron: '0 */12 * * *' # A cada 12 horas
+  workflow_dispatch:
+
+jobs:
+  update-cves:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout o repositório
+        uses: actions/checkout@v3
+
+      - name: Instalar dependências
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Buscar últimos CVEs e atualizar README.md
+        run: |
+          echo "🔍 Buscando últimos CVEs..."
+          curl -s "https://services.nvd.nist.gov/rest/json/cves/2.0?cvssV3Severity=CRITICAL&resultsPerPage=5" -o cves.json
+
+          echo "## 📊 Últimos CVEs Monitorados (Atualizado automaticamente)" > cve_block.txt
+          echo "\\`\\`\\`yaml" >> cve_block.txt
+          jq -r '.vulnerabilities[] | "- \(.cve.id) - \(.cve.descriptions[0].value)"' cves.json | sed 's/^/  /' >> cve_block.txt
+          echo "\\`\\`\\`" >> cve_block.txt
+
+          awk '
+            BEGIN {inside=0}
+            /## 📊 Últimos CVEs Monitorados/ {print; while ((getline line < "cve_block.txt") > 0) print line; inside=1; next}
+            inside && /^```/ {inside=0; next}
+            !inside {print}
+          ' README.md > temp.md && mv temp.md README.md
+
+          echo "✅ Bloco atualizado com sucesso!"
+
+      - name: Commit e push se houver mudanças
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN || env.GITHUB_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "❌ GITHUB_TOKEN não definido. Abortando push."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git remote set-url origin https://x-access-token:$GH_TOKEN@github.com/${{ github.repository }}
+          git add README.md
+          git diff --cached --quiet || git commit -m "🔄 Update CVE list [bot]"
+          git push
