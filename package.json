@@ -1,6 +1,16 @@
 {
   "name": "appsec-daily-hub",
-  "version": "1.0.0",
+  "version": "1.0.2",
+  "description": "🛡️ AppSec Daily Hub - Central de Segurança de Software",
+  "keywords": [
+    "AppSec",
+    "OWASP",
+    "segurança",
+    "vulnerabilidades",
+    "CVE",
+    "exploits",
+    "security"
+  ],
   "description": "Central de notícias diárias, vulnerabilidades críticas, ferramentas OWASP e tutoriais técnicos sobre segurança de software.",
   "homepage": "https://github.com/KleilsonSantos/appsec-daily-hub#readme",
   "bugs": {
@@ -11,7 +21,12 @@
     "url": "git+https://github.com/KleilsonSantos/appsec-daily-hub.git"
   },
   "license": "ISC",
-  "author": "",
+  "author": "Kleilson Santos <kleilson@icloud.com>",
+  "files": [
+    "index.html",
+    "index.js",
+    "styles.css"
+  ],
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
