@@ -16,6 +16,9 @@ pnpm-lock.yaml
 .env.test.local
 .env.production.local
 
+# === Secrets ===
+.secrets
+
 # === Logs ===
 logs
 *.log
