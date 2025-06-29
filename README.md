@@ -10,7 +10,7 @@
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github&logoColor=white)
 ![OWASP](https://img.shields.io/badge/OWASP-000000?style=for-the-badge&logo=owasp&logoColor=white)
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue?style=flat-square)
+![Version](https://img.shields.io/badge/version-1.0.6-blue?style=flat-square)
 ![License](https://img.shields.io/badge/license-ISC-green?style=flat-square)
 ![Maintained](https://img.shields.io/badge/maintained-yes-brightgreen?style=flat-square)
 ![Security](https://img.shields.io/badge/security-focused-red?style=flat-square)
@@ -22,7 +22,7 @@ _Novos recursos e fontes de segurança são adicionados regularmente. Contribui�
 
 ---
 
-![AppSec Daily Hub Preview](https://via.placeholder.com/800x400/0a0e1a/ff4d4d?text=🛡️+AppSec+Daily+Hub+Preview)
+🌍 [AppSec Daily Hub Preview](https://kleilsonsantos.github.io/appsec-daily-hub/)
 
 ## 📝 Descrição
 
@@ -100,6 +100,9 @@ O projeto está estruturado de forma modular e responsiva:
 ### ⭐ Favoritos Pessoais
 
 - [GitHub - infra-devtools](https://github.com/KleilsonSantos/infra-devtools) - Ferramentas de infraestrutura
+- [GitHub - VaultSpring](https://github.com/KleilsonSantos/VaultSpring) - Sistema seguro com autenticação e testes de integração avançados
+- [GitHub - Mongo-RestFull-API](https://github.com/KleilsonSantos/Mongo-RestFull-API) - API REST robusta com testes, middlewares e segurança aplicada 
+- [GitHub - OrderProcessingSystem](https://github.com/KleilsonSantos/OrderProcessingSystem) - Sistema de pedidos com processamento assíncrono e alta performance
 - [Feed personalizado Notion & RSS](https://www.notion.so/AppSec-Daily-Hub-20ea149fe7e080c5991ce66fda5b936f) - Curadoria personalizada
 
 ## 🚀 Acesso Rápido

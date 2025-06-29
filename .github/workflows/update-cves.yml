@@ -2,48 +2,52 @@ name: Update CVE List
 
 on:
   schedule:
-    - cron: '0 */12 * * *' # A cada 12 horas
+    - cron: '0 */12 * * *' # Every 12 hours
   workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
 
 jobs:
   update-cves:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout o repositório
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Buscar últimos CVEs e atualizar README.md
+      - name: Fetch latest CVEs and update README.md
         run: |
-          echo "🔍 Buscando últimos CVEs..."
+          echo "🔍 Fetching latest CVEs..."
           curl -s "https://services.nvd.nist.gov/rest/json/cves/2.0?cvssV3Severity=CRITICAL&resultsPerPage=5" -o cves.json
 
-          echo "## 📊 Últimos CVEs Monitorados (Atualizado automaticamente)" > cve_block.txt
+          echo "## 📊 Latest Monitored CVEs (Automatically Updated)" > cve_block.txt
           echo '```yaml' >> cve_block.txt
           jq -r '.vulnerabilities[] | "- \(.cve.id) - \(.cve.descriptions[0].value)"' cves.json | sed 's/^/  /' >> cve_block.txt
           echo '```' >> cve_block.txt
-          echo "📝 Atualizando README.md com os últimos CVEs..."
-
+          echo "📝 Updating README.md with latest CVEs..."
 
           awk '
             BEGIN {inside=0}
-            /## 📊 Últimos CVEs Monitorados/ {print; while ((getline line < "cve_block.txt") > 0) print line; inside=1; next}
+            /## 📊 Latest Monitored CVEs/ {print; while ((getline line < "cve_block.txt") > 0) print line; inside=1; next}
             inside && /^```/ {inside=0; next}
             !inside {print}
           ' README.md > temp.md && mv temp.md README.md
 
-          echo "✅ Bloco atualizado com sucesso!"
+          echo "✅ Block updated successfully!"
 
-      - name: Commit e push se houver mudanças (Local ACT)
+      - name: Commit and push if changes exist (Local ACT)
+        if: github.event_name != 'pull_request'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO_NAME: ${{ github.repository }}
         run: |
-          echo "🔑 Verificando token..."
+          echo "🔑 Checking token..."
           if [ -z "$GH_TOKEN" ]; then
-            echo "❌ GH_TOKEN não está definido. Abortando push."
+            echo "❌ GH_TOKEN is not defined. Aborting push."
             exit 1
           fi
           git config user.name "github-actions[bot]"
@@ -51,6 +55,7 @@ jobs:
           git remote set-url origin https://x-access-token:$GH_TOKEN@github.com/KleilsonSantos/appsec-daily-hub
           git add README.md
           git diff --cached --quiet || git commit -m "🔄 Update CVE list [bot]"
-          git push origin HEAD:main || echo "⚠️ Nenhuma mudança para enviar."
-      - name: Notificar conclusão
-        run: echo "✅ Atualização de CVEs concluída com sucesso!"
+          git push origin HEAD:main || echo "⚠️ No changes to push."
+
+      - name: Notify completion
+        run: echo "✅ CVE update completed successfully!"
