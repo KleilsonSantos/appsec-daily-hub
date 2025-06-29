@@ -1,42 +1,47 @@
-name: 🚀 Deploy com GitHub Pages
+name: 🚀 Deploy to GitHub Pages
 
+# 📌 This workflow triggers every time code is pushed to the main branch
 on:
   push:
     branches: [main]
 
+# 🔐 Required permissions to publish to GitHub Pages
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: read       # Read repository contents
+  pages: write         # Publish to GitHub Pages
+  id-token: write      # Authenticate deployment
 
+# 🧵 Ensures only one deployment runs at a time
 concurrency:
   group: "pages"
   cancel-in-progress: true
 
 jobs:
   build:
+    name: 🏗️ Build and Package Site
     runs-on: ubuntu-latest
+
     steps:
-      - name: 📥 Clonando o repositório
+      # ⬇️ Step 1: Clone the repository into the workflow runner
+      - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      - name: 🛠️ Construindo o conteúdo do site
-        run: |
-          mkdir public
-          echo "<h1>Deploy bem-sucedido!</h1>" > public/index.html
-
-      - name: 📦 Fazendo upload do artefato
+      # 📦 Step 2: Upload the site content (in this case, from the root folder)
+      - name: 📦 Upload static site files
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
+          path: ./ # Root directory contains index.html and assets
 
   deploy:
+    name: 🚀 Deploy to GitHub Pages
     needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - name: 🚀 Deploy para GitHub Pages
+      # 🚀 Step 3: Deploy the uploaded artifact using GitHub’s official Pages action
+      - name: 🚀 Deploy website
         id: deployment
         uses: actions/deploy-pages@v4
